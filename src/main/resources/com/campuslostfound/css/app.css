@@ -1,0 +1,56 @@
+.root {
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+    -fx-background-color: #f5f7fb;
+}
+
+.header-box {
+    -fx-background-color: #e8f0fe;
+    -fx-border-color: #cbd8f2;
+    -fx-border-width: 0 0 1 0;
+}
+
+.title-label {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f3b68;
+}
+
+.subtitle-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #4b5d75;
+}
+
+.section-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f3b68;
+}
+
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-border-color: #d9e2f3;
+    -fx-border-radius: 12;
+    -fx-padding: 18;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0.1, 0, 3);
+}
+
+.primary-button {
+    -fx-background-color: #1f6feb;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.primary-button:hover {
+    -fx-background-color: #1557b0;
+}
+
+.error-label {
+    -fx-text-fill: #b42318;
+    -fx-font-weight: bold;
+}
+
+.status-label {
+    -fx-text-fill: #175cd3;
+    -fx-font-weight: bold;
+}
