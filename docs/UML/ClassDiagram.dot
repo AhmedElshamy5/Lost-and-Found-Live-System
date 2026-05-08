@@ -1,0 +1,27 @@
+digraph G {
+    graph [rankdir=LR, bgcolor="white", pad=0.3, nodesep=0.5, ranksep=0.8];
+    node [shape=record, fontname="Arial", fontsize=10, style="rounded,filled", fillcolor="#eef5ff", color="#2f5d90"];
+    edge [fontname="Arial", fontsize=9, color="#4b5563"];
+
+    User [label="{User| - fullName\l - username\l - password\l - contact\l| + getDisplayName()\l}"];
+    ItemReport [label="{abstract ItemReport| - id\l - itemName\l - category\l - location\l - description\l - reporter\l - status\l| + getReportType()\l + toNetworkLine()\l}", fillcolor="#fff7e6"];
+    LostItemReport [label="{LostItemReport| | + getReportType(): LOST\l}"];
+    FoundItemReport [label="{FoundItemReport| | + getReportType(): FOUND\l}"];
+    ReportManager [label="{ReportManager| - reports\l - nextId\l| + addReport()\l + getReportsSnapshot()\l + markReturned()\l}"];
+    ReportValidator [label="{ReportValidator| | + validateUser()\l + validateReport()\l + parsePort()\l}"];
+    Message [label="{Message| - type\l - user\l - report\l - reports\l - text\l| + requestReports()\l + submitReport()\l}"];
+    LostFoundServer [label="{LostFoundServer| - serverSocket\l - clients\l - reportManager\l| + start()\l + handleMessage()\l + broadcast()\l + stop()\l}", fillcolor="#e8f8ed"];
+    ClientHandler [label="{ClientHandler| - socket\l - inputStream\l - outputStream\l| + start()\l + send()\l + close()\l}", fillcolor="#e8f8ed"];
+    ClientNetworkService [label="{ClientNetworkService| - socket\l - listenerThread\l| + connect()\l + send()\l + disconnect()\l}", fillcolor="#e8f8ed"];
+    ValidationException [label="{ValidationException| | + ValidationException(message)\l}", fillcolor="#ffecec"];
+
+    LostItemReport -> ItemReport [arrowhead=onormal, label="extends"];
+    FoundItemReport -> ItemReport [arrowhead=onormal, label="extends"];
+    ItemReport -> User [label="reporter"];
+    ReportManager -> ItemReport [label="stores"];
+    LostFoundServer -> ReportManager [label="uses"];
+    LostFoundServer -> ClientHandler [label="one thread per client"];
+    ClientHandler -> Message [label="receives/sends"];
+    ClientNetworkService -> Message [label="sends/receives"];
+    ReportValidator -> ValidationException [style=dashed, label="throws"];
+}

@@ -1,0 +1,77 @@
+@startuml
+title Campus Lost & Found Live Desk - Class Diagram
+
+class User {
+  -fullName: String
+  -username: String
+  -password: String
+  -contact: String
+  +getDisplayName(): String
+}
+
+abstract class ItemReport {
+  -id: int
+  -itemName: String
+  -category: String
+  -location: String
+  -description: String
+  -reporter: User
+  -createdAt: LocalDateTime
+  -status: ReportStatus
+  +getReportType(): ReportType
+  +toNetworkLine(): String
+}
+
+class LostItemReport
+class FoundItemReport
+class ReportManager {
+  +addReport(report): ItemReport
+  +getReportsSnapshot(): List<ItemReport>
+  +markReturned(reportId): void
+}
+
+class ReportValidator {
+  +validateUser(user): void
+  +validateReport(report): void
+  +parsePort(value): int
+}
+
+class ValidationException
+class Message {
+  -type: MessageType
+  -user: User
+  -report: ItemReport
+  -reports: List<ItemReport>
+  -text: String
+}
+
+class LostFoundServer {
+  +start(): void
+  +handleMessage(handler, message): void
+  +broadcastAnnouncement(text): void
+  +markReturned(reportId): void
+  +stop(): void
+}
+
+class ClientHandler {
+  +start(): void
+  +send(message): void
+  +close(): void
+}
+
+class ClientNetworkService {
+  +connect(host, port): void
+  +send(message): void
+  +disconnect(): void
+}
+
+ItemReport <|-- LostItemReport
+ItemReport <|-- FoundItemReport
+ItemReport o-- User
+ReportManager o-- ItemReport
+LostFoundServer o-- ReportManager
+LostFoundServer o-- ClientHandler
+ClientHandler --> Message
+ClientNetworkService --> Message
+ReportValidator ..> ValidationException
+@enduml
