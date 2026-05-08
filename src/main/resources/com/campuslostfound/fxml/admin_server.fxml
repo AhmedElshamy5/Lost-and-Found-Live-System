@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="680" prefWidth="1040" stylesheets="@../css/app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.campuslostfound.server.controllers.AdminServerController">
+    <top>
+        <VBox spacing="10" styleClass="header-box">
+            <padding>
+                <Insets bottom="16" left="24" right="24" top="16" />
+            </padding>
+            <children>
+                <Label styleClass="title-label" text="Admin Server Console" />
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <children>
+                        <Label text="Port" />
+                        <TextField fx:id="portField" prefWidth="90" text="5555" />
+                        <Button fx:id="startButton" onAction="#handleStartServer" styleClass="primary-button" text="Start Server" />
+                        <Button fx:id="stopButton" onAction="#handleStopServer" text="Stop Server" />
+                        <Label text="Status:" />
+                        <Label fx:id="statusLabel" styleClass="status-label" text="Stopped" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </top>
+    <center>
+        <SplitPane dividerPositions="0.28,0.68">
+            <items>
+                <VBox spacing="10">
+                    <padding>
+                        <Insets bottom="14" left="14" right="14" top="14" />
+                    </padding>
+                    <children>
+                        <Label styleClass="section-title" text="Connected Clients" />
+                        <ListView fx:id="clientsListView" VBox.vgrow="ALWAYS" />
+                        <Label styleClass="section-title" text="Broadcast" />
+                        <TextField fx:id="announcementField" promptText="Message for all clients" />
+                        <Button onAction="#handleBroadcast" text="Send Announcement" />
+                    </children>
+                </VBox>
+                <VBox spacing="10">
+                    <padding>
+                        <Insets bottom="14" left="14" right="14" top="14" />
+                    </padding>
+                    <children>
+                        <Label styleClass="section-title" text="Live Reports" />
+                        <TableView fx:id="reportsTable" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="idColumn" prefWidth="50" text="ID" />
+                                <TableColumn fx:id="typeColumn" prefWidth="70" text="Type" />
+                                <TableColumn fx:id="nameColumn" prefWidth="130" text="Item" />
+                                <TableColumn fx:id="categoryColumn" prefWidth="95" text="Category" />
+                                <TableColumn fx:id="locationColumn" prefWidth="125" text="Location" />
+                                <TableColumn fx:id="statusColumn" prefWidth="90" text="Status" />
+                                <TableColumn fx:id="reporterColumn" prefWidth="160" text="Reporter" />
+                            </columns>
+                        </TableView>
+                        <Button onAction="#handleMarkReturned" text="Mark Selected as Returned" />
+                    </children>
+                </VBox>
+                <VBox spacing="10">
+                    <padding>
+                        <Insets bottom="14" left="14" right="14" top="14" />
+                    </padding>
+                    <children>
+                        <Label styleClass="section-title" text="Server Log" />
+                        <TextArea fx:id="logArea" editable="false" wrapText="true" VBox.vgrow="ALWAYS" />
+                        <Button onAction="#handleClearLog" text="Clear Log" />
+                    </children>
+                </VBox>
+            </items>
+        </SplitPane>
+    </center>
+</BorderPane>
